@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Custom Sky Palette */
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #dff2fe;
+  --color-sky-200: #b8e6fe;
+  --color-sky-300: #74d4ff;
+  --color-sky-400: #00bcff;
+  --color-sky-500: #00a6f4;
+  --color-sky-600: #0084d1;
+  --color-sky-700: #0069a8;
+  --color-sky-800: #00598a;
+  --color-sky-900: #024a70;
+  --color-sky-950: #052f4a;
+
+  /* Custom Shadows for the "Glow" effect */
+  --shadow-glow-sm: 0 0 10px rgba(0, 166, 244, 0.2);
+  --shadow-glow-md: 0 0 15px rgba(0, 166, 244, 0.4);
+  --shadow-glow-lg: 0 0 25px rgba(0, 166, 244, 0.5);
+
+  /* Animations */
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+
+    100% {
+      background-position: 1000px 0;
+    }
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Force Dark Mode By Default for a Cinematic Vibe */
+:root {
+  --background: #052f4a;
+  /* sky-950 */
+  --foreground: #f0f9ff;
+  /* sky-50 */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utility classes for Premium UI */
+@layer utilities {
+  .glass {
+    @apply bg-sky-950/40 backdrop-blur-md border border-sky-300/10 transform-gpu;
+    will-change: transform, backdrop-filter;
+  }
+
+  .glass-card {
+    @apply bg-sky-900/30 backdrop-blur-sm border border-sky-800/50 rounded-xl transition-all duration-300 transform-gpu;
+    will-change: transform, backdrop-filter;
+  }
+
+  .glass-card-hoverable:hover {
+    @apply border-sky-400/50 shadow-glow-md bg-sky-900/50 transform -translate-y-1;
+  }
+
+  .skeleton {
+    @apply bg-sky-800/50 animate-shimmer;
+    background-image: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.05) 20%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0));
+    background-size: 1000px 100%;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+.disable-scrollbars::-webkit-scrollbar {
+  display: none;
+}
+
+.disable-scrollbars {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(14, 165, 233, 0.3);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 165, 233, 0.5);
 }
